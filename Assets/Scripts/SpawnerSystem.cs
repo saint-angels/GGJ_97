@@ -12,7 +12,7 @@ using Random = Unity.Mathematics.Random;
 
 // ReSharper disable once InconsistentNaming
 [UpdateInGroup(typeof(SimulationSystemGroup))]
-public class SpawnerSystem_SpawnAndRemove : JobComponentSystem
+public class SpawnerSystem : JobComponentSystem
 {
     // BeginInitializationEntityCommandBufferSystem is used to create a command buffer which will then be played back
     // when that barrier system executes.
@@ -31,12 +31,12 @@ public class SpawnerSystem_SpawnAndRemove : JobComponentSystem
         m_EntityCommandBufferSystem = World.GetOrCreateSystem<BeginInitializationEntityCommandBufferSystem>();
     }
 
-    struct SpawnJob : IJobForEachWithEntity<Spawner_SpawnAndRemove, LocalToWorld>
+    struct SpawnJob : IJobForEachWithEntity<Spawner, LocalToWorld>
     {
         public EntityCommandBuffer.Concurrent CommandBuffer;
 
         [BurstCompile]
-        public void Execute(Entity entity, int index, [ReadOnly] ref Spawner_SpawnAndRemove spawner, [ReadOnly] ref LocalToWorld location)
+        public void Execute(Entity entity, int index, [ReadOnly] ref Spawner spawner, [ReadOnly] ref LocalToWorld location)
         {
             var random = new Random(1);
 
@@ -50,7 +50,7 @@ public class SpawnerSystem_SpawnAndRemove : JobComponentSystem
                     var position = math.transform(location.Value, new float3(x * 1.3F, noise.cnoise(new float2(x, y) * 0.21F) * 2, y * 1.3F));
                     CommandBuffer.SetComponent(index, instance, new Translation { Value = position });
                     CommandBuffer.SetComponent(index, instance, new LifeTime { Value = random.NextFloat(10.0F, 100.0F) });
-                    CommandBuffer.SetComponent(index, instance, new RotationSpeed_SpawnAndRemove { RadiansPerSecond = math.radians(random.NextFloat(25.0F, 90.0F)) });
+                    CommandBuffer.SetComponent(index, instance, new RotationSpeed { RadiansPerSecond = math.radians(random.NextFloat(25.0F, 90.0F)) });
                 }
             }
 

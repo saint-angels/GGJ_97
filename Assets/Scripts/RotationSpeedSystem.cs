@@ -9,16 +9,16 @@ using UnityEngine;
 // This system updates all entities in the scene with both a RotationSpeed_SpawnAndRemove and Rotation component.
 
 // ReSharper disable once InconsistentNaming
-public class RotationSpeedSystem_SpawnAndRemove : JobComponentSystem
+public class RotationSpeedSystem : JobComponentSystem
 {
     // Use the [BurstCompile] attribute to compile a job with Burst. You may see significant speed ups, so try it!
     [BurstCompile]
-    struct RotationSpeedJob : IJobForEach<Rotation, RotationSpeed_SpawnAndRemove>
+    struct RotationSpeedJob : IJobForEach<Rotation, RotationSpeed>
     {
         public float DeltaTime;
 
         // The [ReadOnly] attribute tells the job scheduler that this job will not write to rotSpeedSpawnAndRemove
-        public void Execute(ref Rotation rotation, [ReadOnly] ref RotationSpeed_SpawnAndRemove rotSpeedSpawnAndRemove)
+        public void Execute(ref Rotation rotation, [ReadOnly] ref RotationSpeed rotSpeedSpawnAndRemove)
         {
             // Rotate something about its up vector at the speed given by RotationSpeed_SpawnAndRemove.
             rotation.Value = math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), rotSpeedSpawnAndRemove.RadiansPerSecond * DeltaTime));

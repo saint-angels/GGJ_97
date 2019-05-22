@@ -3,7 +3,7 @@ using Unity.Entities;
 
 // ReSharper disable once InconsistentNaming
 [Serializable]
-public struct RotationSpeed_SpawnAndRemove : IComponentData
+public struct RotationSpeed : IComponentData
 {
     public float RadiansPerSecond;
 }

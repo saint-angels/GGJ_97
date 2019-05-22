@@ -5,7 +5,7 @@ using UnityEngine;
 
 // ReSharper disable once InconsistentNaming
 [RequiresEntityConversion]
-public class SpawnerAuthoring_SpawnAndRemove : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObjectToEntity
+public class SpawnerAuthoring : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObjectToEntity
 {
     public GameObject Prefab;
     public int CountX;
@@ -21,7 +21,7 @@ public class SpawnerAuthoring_SpawnAndRemove : MonoBehaviour, IDeclareReferenced
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        var spawnerData = new Spawner_SpawnAndRemove
+        var spawnerData = new Spawner
         {
             // The referenced prefab will be converted due to DeclareReferencedPrefabs.
             // So here we simply map the game object to an entity reference to that prefab.
