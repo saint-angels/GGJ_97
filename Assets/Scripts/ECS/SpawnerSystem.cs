@@ -47,7 +47,8 @@ public class SpawnerSystem : JobComponentSystem
                     var instance = CommandBuffer.Instantiate(index, spawner.Prefab);
 
                     // Place the instantiated in a grid with some noise
-                    var position = math.transform(location.Value, new float3(x * 1.3F, noise.cnoise(new float2(x, y) * 0.21F) * 2, y * 1.3F));
+                    float z = noise.cnoise(new float2(x, y) * 0.21F) * 2;
+                    float3 position = math.transform(location.Value, spawner.Origin + new float3(x * 1.3F, y * 1.3F, 0));
                     CommandBuffer.SetComponent(index, instance, new Translation { Value = position });
                     CommandBuffer.SetComponent(index, instance, new LifeTime { Value = random.NextFloat(10.0F, 100.0F) });
                     CommandBuffer.SetComponent(index, instance, new RotationSpeed { RadiansPerSecond = math.radians(random.NextFloat(25.0F, 90.0F)) });

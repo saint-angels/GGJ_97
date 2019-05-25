@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 // ReSharper disable once InconsistentNaming
@@ -25,6 +26,7 @@ public class SpawnerAuthoring : MonoBehaviour, IDeclareReferencedPrefabs, IConve
         {
             // The referenced prefab will be converted due to DeclareReferencedPrefabs.
             // So here we simply map the game object to an entity reference to that prefab.
+            Origin = new float3(0,0,0),
             Prefab = conversionSystem.GetPrimaryEntity(Prefab),
             CountX = CountX,
             CountY = CountY,
